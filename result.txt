@@ -1,72 +1,10 @@
-brian@Ubuntu:~/Desktop/projects/fileshare$ ^C
-brian@Ubuntu:~/Desktop/projects/fileshare$ ifconfig
-br-63bd92574308: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
-        inet 172.18.0.1  netmask 255.255.0.0  broadcast 172.18.255.255
-        inet6 fe80::54e4:cff:fe26:a980  prefixlen 64  scopeid 0x20<link>
-        ether 56:e4:0c:26:a9:80  txqueuelen 0  (Ethernet)
-        RX packets 0  bytes 0 (0.0 B)
-        RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 0  bytes 0 (0.0 B)
-        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+# Detect your interface
+MAIN_INTERFACE=$(ip route | grep default | awk '{print $5}' | head -n1)
+echo "Main interface: $MAIN_INTERFACE"
 
-docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
-        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255
-        ether 42:23:c6:13:76:e7  txqueuelen 0  (Ethernet)
-        RX packets 0  bytes 0 (0.0 B)
-        RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 0  bytes 0 (0.0 B)
-        TX errors 0  dropped 38 overruns 0  carrier 0  collisions 0
+# Update WireGuard config
+sudo sed -i "s/eth0/$MAIN_INTERFACE/g" /etc/wireguard/wg0.conf
 
-enp0s3: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
-        inet 10.0.2.15  netmask 255.255.255.0  broadcast 10.0.2.255
-        inet6 fd17:625c:f037:2:a00:27ff:fe6e:72c6  prefixlen 64  scopeid 0x0<global>
-        inet6 fd17:625c:f037:2:58a9:d7c9:b54b:3b37  prefixlen 64  scopeid 0x0<global>
-        inet6 fe80::a00:27ff:fe6e:72c6  prefixlen 64  scopeid 0x20<link>
-        ether 08:00:27:6e:72:c6  txqueuelen 1000  (Ethernet)
-        RX packets 466588  bytes 643092474 (643.0 MB)
-        RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 71935  bytes 6608335 (6.6 MB)
-        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-
-lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
-        inet 127.0.0.1  netmask 255.0.0.0
-        inet6 ::1  prefixlen 128  scopeid 0x10<host>
-        loop  txqueuelen 1000  (Local Loopback)
-        RX packets 1766  bytes 179767 (179.7 KB)
-        RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 1766  bytes 179767 (179.7 KB)
-        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-
-veth3319bf7: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
-        inet6 fe80::684e:1ff:fea4:5ba3  prefixlen 64  scopeid 0x20<link>
-        ether 6a:4e:01:a4:5b:a3  txqueuelen 0  (Ethernet)
-        RX packets 3  bytes 126 (126.0 B)
-        RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 45  bytes 4622 (4.6 KB)
-        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-
-veth4b01477: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
-        inet6 fe80::d470:baff:feb4:b8ef  prefixlen 64  scopeid 0x20<link>
-        ether d6:70:ba:b4:b8:ef  txqueuelen 0  (Ethernet)
-        RX packets 3  bytes 126 (126.0 B)
-        RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 48  bytes 4836 (4.8 KB)
-        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-
-veth59a43db: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
-        inet6 fe80::446d:f9ff:fed5:9653  prefixlen 64  scopeid 0x20<link>
-        ether 46:6d:f9:d5:96:53  txqueuelen 0  (Ethernet)
-        RX packets 3  bytes 126 (126.0 B)
-        RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 45  bytes 4594 (4.5 KB)
-        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-
-wg0: flags=209<UP,POINTOPOINT,RUNNING,NOARP>  mtu 1420
-        inet 10.0.0.1  netmask 255.255.255.0  destination 10.0.0.1
-        unspec 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  txqueuelen 1000  (UNSPEC)
-        RX packets 0  bytes 0 (0.0 B)
-        RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 0  bytes 0 (0.0 B)
-        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-
-brian@Ubuntu:~/Desktop/projects/fileshare$ 
+# Restart WireGuard
+sudo wg-quick down wg0
+sudo wg-quick up wg0
