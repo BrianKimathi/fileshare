@@ -1,19 +1,32 @@
-brian@Ubuntu:~/Desktop/projects/fileshare$ sudo wg show wg0
-interface: wg0
-  public key: c+yzw8EMaxlzAPm48NmYKBZkEErYhlX6d2Rs1D0jRRs=
-  private key: (hidden)
-  listening port: 51820
-
-peer: MK9V5vkMfSwpK0IdJ98hqjkRB5BrgMiDFg56E7/nllU=
-  allowed ips: 10.0.0.2/32
-brian@Ubuntu:~/Desktop/projects/fileshare$ sudo ip addr show wg0
-15: wg0: <POINTOPOINT,NOARP,UP,LOWER_UP> mtu 1420 qdisc noqueue state UNKNOWN group default qlen 1000
-    link/none 
-    inet 10.0.0.1/24 scope global wg0
-       valid_lft forever preferred_lft forever
-brian@Ubuntu:~/Desktop/projects/fileshare$ sudo iptables -t nat -L -n -v | grep MASQUERADE
-    0     0 MASQUERADE  0    --  *      !docker0  172.17.0.0/16        0.0.0.0/0           
-    0     0 MASQUERADE  0    --  *      !br-63bd92574308  172.18.0.0/16        0.0.0.0/0           
-    0     0 MASQUERADE  0    --  *      eth0    0.0.0.0/0            0.0.0.0/0           
-   77 16133 MASQUERADE  0    --  *      enp0s3  0.0.0.0/0            0.0.0.0/0           
+brian@Ubuntu:~/Desktop/projects/fileshare$ ls -la
+total 140
+drwxrwxr-x 3 brian brian  4096 Nov 10 10:41 .
+drwxrwxr-x 3 brian brian  4096 Nov 10 10:10 ..
+-rw-rw-r-- 1 brian brian    45 Nov 10 10:41 android_client_private.key
+-rw-rw-r-- 1 brian brian    45 Nov 10 10:41 android_client_public.key
+-rw-rw-r-- 1 brian brian  2573 Nov 10 10:10 API_DOCUMENTATION.md
+-rw-rw-r-- 1 brian brian  2031 Nov 10 10:10 application-aws.properties
+-rw-rw-r-- 1 brian brian  1685 Nov 10 10:10 application-vm.properties
+-rw-rw-r-- 1 brian brian  6779 Nov 10 10:10 DEPLOYMENT.md
+-rw-rw-r-- 1 brian brian  2109 Nov 10 10:10 deploy-to-aws.sh
+-rw-rw-r-- 1 brian brian  2055 Nov 10 10:10 generate-client-config.sh
+-rw-rw-r-- 1 brian brian   503 Nov 10 10:10 gephub-vpn.service
+drwxrwxr-x 8 brian brian  4096 Nov 10 10:10 .git
+-rw-rw-r-- 1 brian brian    38 Nov 10 10:10 .gitattributes
+-rw-rw-r-- 1 brian brian   394 Nov 10 10:10 .gitignore
+-rw-rw-r-- 1 brian brian  2763 Nov 10 10:10 HELP.md
+-rw-rw-r-- 1 brian brian 11790 Nov 10 10:10 mvnw
+-rw-rw-r-- 1 brian brian  8481 Nov 10 10:10 mvnw.cmd
+-rw-rw-r-- 1 brian brian  2295 Nov 10 10:10 NETWORK_CONFIG.md
+-rw-rw-r-- 1 brian brian  4106 Nov 10 10:10 pom.xml
+-rw-rw-r-- 1 brian brian  1683 Nov 10 10:10 QUICK_START.md
+-rw-rw-r-- 1 brian brian  1186 Nov 10 10:10 README.md
+-rw------- 1 root  root     45 Nov 10 10:18 server_private.key
+-rw-r--r-- 1 root  root     45 Nov 10 10:18 server_public.key
+-rw-rw-r-- 1 brian brian  1454 Nov 10 10:10 setup-aws-ec2.sh
+-rw-rw-r-- 1 brian brian  3690 Nov 10 10:10 setup-openvpn-server.sh
+-rw-rw-r-- 1 brian brian  1896 Nov 10 10:10 setup-ubuntu-vm.sh
+-rwxrwxr-x 1 brian brian  2582 Nov 10 10:10 setup-wireguard-server.sh
+-rw-rw-r-- 1 brian brian  1670 Nov 10 10:10 TESTING_CHECKLIST.md
+-rw-rw-r-- 1 brian brian  3583 Nov 10 10:10 VPN_SERVER_SETUP.md
 brian@Ubuntu:~/Desktop/projects/fileshare$ 
