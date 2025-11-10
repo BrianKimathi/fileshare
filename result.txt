@@ -1,10 +1,16 @@
-# Detect your interface
-MAIN_INTERFACE=$(ip route | grep default | awk '{print $5}' | head -n1)
-echo "Main interface: $MAIN_INTERFACE"
-
-# Update WireGuard config
-sudo sed -i "s/eth0/$MAIN_INTERFACE/g" /etc/wireguard/wg0.conf
-
-# Restart WireGuard
-sudo wg-quick down wg0
-sudo wg-quick up wg0
+brian@Ubuntu:~/Desktop/projects/fileshare$ MAIN_INTERFACE=$(ip route | grep default | awk '{print $5}' | head -n1)
+brian@Ubuntu:~/Desktop/projects/fileshare$ echo "Main interface: $MAIN_INTERFACE"
+Main interface: enp0s3
+brian@Ubuntu:~/Desktop/projects/fileshare$ sudo sed -i "s/eth0/$MAIN_INTERFACE/g" /etc/wireguard/wg0.conf
+[sudo] password for brian: 
+brian@Ubuntu:~/Desktop/projects/fileshare$ sudo wg-quick down wg0
+[#] ip link delete dev wg0
+[#] iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o enp0s3 -j MASQUERADE
+iptables: Bad rule (does a matching rule exist in that chain?).
+brian@Ubuntu:~/Desktop/projects/fileshare$ sudo wg-quick up wg0
+[#] ip link add wg0 type wireguard
+[#] wg setconf wg0 /dev/fd/63
+[#] ip -4 address add 10.0.0.1/24 dev wg0
+[#] ip link set mtu 1420 up dev wg0
+[#] iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
+brian@Ubuntu:~/Desktop/projects/fileshare$ 
