@@ -21,3 +21,20 @@ Endpoint = 102.219.208.122:51820
 AllowedIPs = 0.0.0.0/0
 PersistentKeepalive = 25
 EOF
+
+
+REsult:
+brian@Ubuntu:~/Desktop/projects/fileshare$ wg genkey | tee android_client_private.key | wg pubkey | tee android_client_public.key
+MK9V5vkMfSwpK0IdJ98hqjkRB5BrgMiDFg56E7/nllU=
+brian@Ubuntu:~/Desktop/projects/fileshare$ sudo wg set wg0 peer $(cat android_client_public.key) allowed-ips 10.0.0.2/32
+brian@Ubuntu:~/Desktop/projects/fileshare$ sudo wg-quick save wg0
+[#] wg showconf wg0
+brian@Ubuntu:~/Desktop/projects/fileshare$ sudo wg show wg0
+interface: wg0
+  public key: c+yzw8EMaxlzAPm48NmYKBZkEErYhlX6d2Rs1D0jRRs=
+  private key: (hidden)
+  listening port: 51820
+
+peer: MK9V5vkMfSwpK0IdJ98hqjkRB5BrgMiDFg56E7/nllU=
+  allowed ips: 10.0.0.2/32
+brian@Ubuntu:~/Desktop/projects/fileshare$ 
