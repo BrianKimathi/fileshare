@@ -1,0 +1,21 @@
+[Unit]
+Description=GepHub VPN Backend Service
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/opt/gephub-vpn
+ExecStart=/usr/bin/java -jar /opt/gephub-vpn/gephub-vpn-0.0.1-SNAPSHOT.jar --spring.config.location=/opt/gephub-vpn/application.properties
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=gephub-vpn
+
+# Environment variables
+Environment="JAVA_OPTS=-Xms256m -Xmx512m"
+
+[Install]
+WantedBy=multi-user.target
+
